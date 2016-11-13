@@ -49,6 +49,9 @@ function contentwidget_totalactivities_widget_retrieve_data($plugin, $widget_set
 
   $request_body = array();
 
+  // Get the API settings.
+  $api_settings = helpergeneric_get_api_settings();
+
   $id_plugin = ampapi_get_mapper_by_property_name('id');
   $request_body['add_columns'][] = $id_plugin['report field key'];
 
@@ -67,9 +70,6 @@ function contentwidget_totalactivities_widget_retrieve_data($plugin, $widget_set
 
   // Include Activities with empty funding in the total activities count.
   $request_body['show_empty_rows'] = TRUE;
-
-  // Get the API settings.
-  $api_settings = helpergeneric_get_api_settings();
 
   // Let's add amount units.
   $request_body['settings']['amountFormat']['amountUnits'] = $amount_units['value'];

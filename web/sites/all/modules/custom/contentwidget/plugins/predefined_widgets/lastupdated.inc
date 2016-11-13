@@ -47,14 +47,14 @@ function contentwidget_lastupdated_widget_retrieve_data($plugin, $widget_setting
     'Content-Type' => 'application/json',
   );
 
-  if (!empty($widget_settings['count'])) {
-    $options['parameters']['count'] = $widget_settings['count'];
-  }
-
   $request_body = array();
 
   // Get the API settings.
   $api_settings = helpergeneric_get_api_settings();
+
+  if (!empty($widget_settings['count'])) {
+    $request_body['parameters']['count'] = $widget_settings['count'];
+  }
 
   // Handle the global "Humanitarian Aid" filter.
   // @see helpergeneric_api_settings_form()

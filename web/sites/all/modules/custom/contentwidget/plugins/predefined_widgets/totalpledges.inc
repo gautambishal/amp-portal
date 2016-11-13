@@ -41,9 +41,6 @@ function contentwidget_totalpledges_widget_retrieve_report_data($plugin, $widget
   $amount_units_settings = _ampapi_activity_get_api_settings('amount-units');
   $amount_units = $amount_units_settings[$amount_units_key];
 
-  // Try to get the response from cache.
-  $report_totals = array();
-
   // Try to get the processed response from cache.
   if ($cached = cache_get($cache_id, 'cache')) {
     return $cached->data;
@@ -57,6 +54,9 @@ function contentwidget_totalpledges_widget_retrieve_report_data($plugin, $widget
   );
 
   $request_body = array();
+
+  // Get the API settings.
+  $api_settings = helpergeneric_get_api_settings();
 
   // Note: Because we don't use these as fields, we require no mappings so far,
   // that's why we just use the plain values without ctools plugins.
@@ -79,8 +79,6 @@ function contentwidget_totalpledges_widget_retrieve_report_data($plugin, $widget
   $request_body['raw_values'] = array('M');
   $request_body['reportType'] = 'P';
   $request_body['name'] = 'api:totalpledges';
-
-  $api_settings = helpergeneric_get_api_settings();
 
   // Let's add amount units.
   $request_body['settings']['amountFormat']['amountUnits'] = $amount_units['value'];

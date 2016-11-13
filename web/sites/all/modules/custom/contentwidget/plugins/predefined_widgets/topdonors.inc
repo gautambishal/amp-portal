@@ -46,18 +46,23 @@ function contentwidget_topdonors_widget_retrieve_data($plugin, $widget_settings,
     'Content-Type' => 'application/json',
   );
 
+  $request_body = array();
+
+  // Get the API settings.
+  $api_settings = helpergeneric_get_api_settings();
+
   if (!empty($widget_settings['period'])) {
-    $parameters['months'] = $widget_settings['period'];
+    $request_body['parameters']['months'] = $widget_settings['period'];
   }
   if (!empty($widget_settings['count'])) {
-    $parameters['count'] = $widget_settings['count'];
+    $request_body['parameters']['count'] = $widget_settings['count'];
   }
 
   if (!empty($widget_settings['type'])) {
     // @TODO: Request and API Endpoint for this.
     switch ($widget_settings['type']) {
       case 'disbursements':
-        $parameters['fundingType'] = 2;
+        $request_body['parameters']['fundingType'] = 2;
         break;
 
       case 'commitments':
@@ -66,11 +71,6 @@ function contentwidget_topdonors_widget_retrieve_data($plugin, $widget_settings,
         break;
     }
   }
-
-  $request_body = array();
-
-  // Get the API settings.
-  $api_settings = helpergeneric_get_api_settings();
 
   // Handle the global "Humanitarian Aid" filter.
   // @see helpergeneric_api_settings_form()
